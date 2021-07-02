@@ -8,34 +8,27 @@ install.packages("fdth")
 library(fdth)
 install.packages("zoo")
 library(zoo)
+install.packages("plotrix")
+library(plotrix)
 
 #ESPAÑA
 datos = covid19(country = "Spain")
 
-datosCOVID = data.frame(datos$id,
-                      datos$date,
-                      datos$confirmed,
-                      datos$recovered,
-                      datos$deaths,
-                      datos$vaccines,
-                      as.yearmon(datos$date),
+datosCOVID = data.frame(datos = datos$id,
+                      date = datos$date,
+                      confirmed = datos$confirmed,
+                      recovered = datos$recovered,
+                      deaths = datos$deaths,
+                      vaccines = datos$vaccines,
+                      month = as.yearmon(datos$date),
                       rigurosidad=cut(datos$stringency_index, breaks = c(0,20,40,60,80,100),
                         labels = c("De 0 a 2", "De 2 a 4", "De 4 a 6", "De 6 a 8","De 8 a 10")),
                       restriccionMobilidad=datos$gatherings_restrictions)
 View(datosCOVID)
-View(datos)
-
-hist(datos$gatherings_restrictions)
 
 
-
-
-
-
-
-
-
-#UNIVARIANTE - CUANTITATIVAS
+#*****************UNIVARIANTE***********************
+# CUANTITATIVAS
 
 #VACCINES
 mean(na.omit(datosCOVID$vaccines))
@@ -106,9 +99,22 @@ tb=fdt(datosCOVID$deaths, breaks="Sturges")
 tb
 
 boxplot(na.omit(datosCOVID$deaths), horizontal  = TRUE)
-plot(datosCOVID$date, datosCOVID$deaths, Type = "1",
+plot(datosCOVID$Date, datosCOVID$deaths, Type = "1",
      main = "Grafico de lineas - Muertes", xlab = "Fecha", ylab = "# muertes")
 
 #CUALITATIVAS
+barplot(table(datosCOVID$month), main = "Grafico de barras- Meses")
+pie(table(datosCOVID$month))
+barplot(table(datosCOVID$rigurosidad), main = "Grafico de barras- Rigurosidad")
+pie(table(datosCOVID$rigurosidad))
+barplot(table(datosCOVID$restriccionMobilidad), main = "Grafico de barras- Restriccion Mobilidad")
+pie(table(datosCOVID$restriccionMobilidad))
+
+#**********************BIVARIARIANTES*********************
+
+#Dagrama de caja entre variable cuantitativa y cualitativa
+boxplot(datosCOVID$confirmed~datosCOVID$month)
+boxplot(datosCOVID$deaths~datosCOVID$month)
+boxplot(datosCOVID$vaccines~datosCOVID$month)
 
 

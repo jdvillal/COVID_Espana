@@ -10,6 +10,12 @@ install.packages("zoo")
 library(zoo)
 install.packages("plotrix")
 library(plotrix)
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("corrplot")
+library(corrplot)
+
+install.packages("rmarkdown")
 
 #ESPAÑA
 datos = covid19(country = "Spain")
@@ -17,7 +23,7 @@ datos = covid19(country = "Spain")
 datosCOVID = data.frame(datos = datos$id,
                       date = datos$date,
                       confirmed = datos$confirmed,
-                      recovered = datos$recovered,
+                      icu = datos$icu,
                       deaths = datos$deaths,
                       vaccines = datos$vaccines,
                       month = as.yearmon(datos$date),
@@ -67,21 +73,21 @@ plot(datosCOVID$date, datosCOVID$confirmed, Type = "1",
      main = "Grafico de lineas - Confirmados", xlab = "Fecha", ylab="Casos confirmados")
 
 #RECUPERADOS
-mean(na.omit(datosCOVID$recovered))
-var(na.omit(datosCOVID$recovered))
-sd(na.omit(datosCOVID$recovered))
+mean(na.omit(datosCOVID$icu))
+var(na.omit(datosCOVID$icu))
+sd(na.omit(datosCOVID$icu))
 
-quantile(na.omit(datosCOVID$recovered),0.25)
-quantile(na.omit(datosCOVID$recovered),0.5)
-quantile(na.omit(datosCOVID$recovered),0.75)
-skewness(na.omit(datosCOVID$recovered))
-kurtosis(na.omit(datosCOVID$recovered))
+quantile(na.omit(datosCOVID$icu),0.25)
+quantile(na.omit(datosCOVID$icu),0.5)
+quantile(na.omit(datosCOVID$icu),0.75)
+skewness(na.omit(datosCOVID$icu))
+kurtosis(na.omit(datosCOVID$icu))
 
-tb=fdt(datosCOVID$recovered, breaks="Sturges")
+tb=fdt(datosCOVID$icu, breaks="Sturges")
 tb
 
-boxplot(na.omit(datosCOVID$recovered), horizontal  = TRUE)
-plot(datosCOVID$date, datosCOVID$recovered, Type = "1",
+boxplot(na.omit(datosCOVID$icu), horizontal  = TRUE)
+plot(datosCOVID$date, datosCOVID$icu, Type = "1",
      main = "Grafico de lineas - Recuperados", xlab = "Fecha", ylab = "Casos recuperados")
 
 #MUERTOS
@@ -116,5 +122,12 @@ pie(table(datosCOVID$restriccionMobilidad))
 boxplot(datosCOVID$confirmed~datosCOVID$month)
 boxplot(datosCOVID$deaths~datosCOVID$month)
 boxplot(datosCOVID$vaccines~datosCOVID$month)
+boxplot(datosCOVID$icu~datosCOVID$month)
 
+#Variables cuantitativa
 
+cor(na.omit(datosCOVID[,c(3,4,5,6)]))
+cov(na.omit(datosCOVID[,c(3,4,5,6)]))
+data=cor(na.omit(datosCOVID[,c(3,4,5,6)]))
+corrplot.mixed(data,lower = "circle",upper = "number")
+plot(na.omit(datosCOVID[,(c(3,4,5,6))]))

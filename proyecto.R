@@ -21,15 +21,15 @@ install.packages("rmarkdown")
 datos = covid19(country = "Spain")
 
 datosCOVID = data.frame(datos = datos$id,
-                      date = datos$date,
-                      confirmed = datos$confirmed,
-                      icu = datos$icu,
-                      deaths = datos$deaths,
-                      vaccines = datos$vaccines,
-                      month = as.yearmon(datos$date),
-                      rigurosidad=cut(datos$stringency_index, breaks = c(0,20,40,60,80,100),
+                      fecha = datos$date,
+                      CasosConfirmados = datos$confirmed,
+                      CasosCuidadosIntensivos = datos$icu,
+                      CasosMuerte = datos$deaths,
+                      Vacunados = datos$vaccines,
+                      Mes = as.yearmon(datos$date),
+                      RigurosidadRestricciones=cut(datos$stringency_index, breaks = c(0,20,40,60,80,100),
                         labels = c("De 0 a 2", "De 2 a 4", "De 4 a 6", "De 6 a 8","De 8 a 10")),
-                      restriccionMobilidad=datos$gatherings_restrictions)
+                      RestriccionMobilidad=datos$gatherings_restrictions)
 View(datosCOVID)
 
 
@@ -37,92 +37,92 @@ View(datosCOVID)
 # CUANTITATIVAS
 
 #VACCINES
-mean(na.omit(datosCOVID$vaccines))
-var(na.omit(datosCOVID$vaccines))
-sd(na.omit(datosCOVID$vaccines))
+mean(na.omit(datosCOVID$Vacunados))
+var(na.omit(datosCOVID$Vacunados))
+sd(na.omit(datosCOVID$Vacunados))
 
-quantile(na.omit(datosCOVID$vaccines),0.25)
-quantile(na.omit(datosCOVID$vaccines),0.5)
-quantile(na.omit(datosCOVID$vaccines),0.75)
-skewness(na.omit(datosCOVID$vaccines))
-kurtosis(na.omit(datosCOVID$vaccines))
+quantile(na.omit(datosCOVID$Vacunados),0.25)
+quantile(na.omit(datosCOVID$Vacunados),0.5)
+quantile(na.omit(datosCOVID$Vacunados),0.75)
+skewness(na.omit(datosCOVID$Vacunados))
+kurtosis(na.omit(datosCOVID$Vacunados))
 
-tb=fdt(datosCOVID$vaccines, breaks="Sturges")
+tb=fdt(datosCOVID$Vacunados, breaks="Sturges")
 tb
 
-boxplot(na.omit(datosCOVID$vaccines), horizontal  = TRUE)
-plot(datosCOVID$date, datosCOVID$vaccines, Type = "1",
-     main = "Grafico de lineas - Vacunas", xlab = "Fecha", ylab = "# vacunados")
+boxplot(na.omit(datosCOVID$Vacunados), horizontal  = TRUE)
+plot(datosCOVID$fecha, datosCOVID$Vacunados, Type = "1",
+     main = "Grafico de lineas - Vacunados", xlab = "Fecha", ylab = "# vacunados")
 
 #CONFIRMADOS
-mean(na.omit(datosCOVID$confirmed))
-var(na.omit(datosCOVID$confirmed))
-sd(na.omit(datosCOVID$confirmed))
+mean(na.omit(datosCOVID$CasosConfirmados))
+var(na.omit(datosCOVID$CasosConfirmados))
+sd(na.omit(datosCOVID$CasosConfirmados))
 
-quantile(na.omit(datosCOVID$confirmed),0.25)
-quantile(na.omit(datosCOVID$confirmed),0.5)
-quantile(na.omit(datosCOVID$confirmed),0.75)
-skewness(na.omit(datosCOVID$confirmed))
-kurtosis(na.omit(datosCOVID$confirmed))
+quantile(na.omit(datosCOVID$CasosConfirmados),0.25)
+quantile(na.omit(datosCOVID$CasosConfirmados),0.5)
+quantile(na.omit(datosCOVID$CasosConfirmados),0.75)
+skewness(na.omit(datosCOVID$CasosConfirmados))
+kurtosis(na.omit(datosCOVID$CasosConfirmados))
 
-tb=fdt(datosCOVID$confirmed, breaks="Sturges")
+tb=fdt(datosCOVID$CasosConfirmados, breaks="Sturges")
 tb
 
-boxplot(na.omit(datosCOVID$confirmed), horizontal  = TRUE)
-plot(datosCOVID$date, datosCOVID$confirmed, Type = "1",
+boxplot(na.omit(datosCOVID$CasosConfirmados), horizontal  = TRUE)
+plot(datosCOVID$fecha, datosCOVID$CasosConfirmados, Type = "1",
      main = "Grafico de lineas - Confirmados", xlab = "Fecha", ylab="Casos confirmados")
 
 #RECUPERADOS
-mean(na.omit(datosCOVID$icu))
-var(na.omit(datosCOVID$icu))
-sd(na.omit(datosCOVID$icu))
+mean(na.omit(datosCOVID$CasosCuidadosIntensivos))
+var(na.omit(datosCOVID$CasosCuidadosIntensivos))
+sd(na.omit(datosCOVID$CasosCuidadosIntensivos))
 
-quantile(na.omit(datosCOVID$icu),0.25)
-quantile(na.omit(datosCOVID$icu),0.5)
-quantile(na.omit(datosCOVID$icu),0.75)
-skewness(na.omit(datosCOVID$icu))
-kurtosis(na.omit(datosCOVID$icu))
+quantile(na.omit(datosCOVID$CasosCuidadosIntensivos),0.25)
+quantile(na.omit(datosCOVID$CasosCuidadosIntensivos),0.5)
+quantile(na.omit(datosCOVID$CasosCuidadosIntensivos),0.75)
+skewness(na.omit(datosCOVID$CasosCuidadosIntensivos))
+kurtosis(na.omit(datosCOVID$CasosCuidadosIntensivos))
 
-tb=fdt(datosCOVID$icu, breaks="Sturges")
+tb=fdt(datosCOVID$CasosCuidadosIntensivos, breaks="Sturges")
 tb
 
-boxplot(na.omit(datosCOVID$icu), horizontal  = TRUE)
-plot(datosCOVID$date, datosCOVID$icu, Type = "1",
+boxplot(na.omit(datosCOVID$CasosCuidadosIntensivos), horizontal  = TRUE)
+plot(datosCOVID$fecha, datosCOVID$CasosCuidadosIntensivos, Type = "1",
      main = "Grafico de lineas - Recuperados", xlab = "Fecha", ylab = "Casos recuperados")
 
 #MUERTOS
-mean(na.omit(datosCOVID$deaths))
-var(na.omit(datosCOVID$deaths))
-sd(na.omit(datosCOVID$deaths))
+mean(na.omit(datosCOVID$CasosMuerte))
+var(na.omit(datosCOVID$CasosMuerte))
+sd(na.omit(datosCOVID$CasosMuerte))
 
-quantile(na.omit(datosCOVID$deaths),0.25)
-quantile(na.omit(datosCOVID$deaths),0.5)
-quantile(na.omit(datosCOVID$deaths),0.75)
-skewness(na.omit(datosCOVID$deaths))
-kurtosis(na.omit(datosCOVID$deaths))
+quantile(na.omit(datosCOVID$CasosMuerte),0.25)
+quantile(na.omit(datosCOVID$CasosMuerte),0.5)
+quantile(na.omit(datosCOVID$CasosMuerte),0.75)
+skewness(na.omit(datosCOVID$CasosMuerte))
+kurtosis(na.omit(datosCOVID$CasosMuerte))
 
-tb=fdt(datosCOVID$deaths, breaks="Sturges")
+tb=fdt(datosCOVID$CasosMuerte, breaks="Sturges")
 tb
 
-boxplot(na.omit(datosCOVID$deaths), horizontal  = TRUE)
-plot(datosCOVID$Date, datosCOVID$deaths, Type = "1",
+boxplot(na.omit(datosCOVID$CasosMuerte), horizontal  = TRUE)
+plot(datosCOVID$Date, datosCOVID$CasosMuerte, Type = "1",
      main = "Grafico de lineas - Muertes", xlab = "Fecha", ylab = "# muertes")
 
 #CUALITATIVAS
-barplot(table(datosCOVID$month), main = "Grafico de barras- Meses")
-pie(table(datosCOVID$month))
-barplot(table(datosCOVID$rigurosidad), main = "Grafico de barras- Rigurosidad")
-pie(table(datosCOVID$rigurosidad))
-barplot(table(datosCOVID$restriccionMobilidad), main = "Grafico de barras- Restriccion Mobilidad")
-pie(table(datosCOVID$restriccionMobilidad))
+barplot(table(datosCOVID$Mes), main = "Grafico de barras- Meses")
+pie(table(datosCOVID$Mes))
+barplot(table(datosCOVID$RigurosidadRestricciones), main = "Grafico de barras- Rigurosidad")
+pie(table(datosCOVID$RigurosidadRestricciones))
+barplot(table(datosCOVID$RestriccionMobilidad), main = "Grafico de barras- Restriccion Mobilidad")
+pie(table(datosCOVID$RestriccionMobilidad))
 
 #**********************BIVARIARIANTES*********************
 
 #Dagrama de caja entre variable cuantitativa y cualitativa
-boxplot(datosCOVID$confirmed~datosCOVID$month)
-boxplot(datosCOVID$deaths~datosCOVID$month)
-boxplot(datosCOVID$vaccines~datosCOVID$month)
-boxplot(datosCOVID$icu~datosCOVID$month)
+boxplot(datosCOVID$CasosConfirmados~datosCOVID$Mes)
+boxplot(datosCOVID$CasosMuerte~datosCOVID$Mes)
+boxplot(datosCOVID$Vacunados~datosCOVID$Mes)
+boxplot(datosCOVID$CasosCuidadosIntensivos~datosCOVID$Mes)
 
 #Variables cuantitativa
 

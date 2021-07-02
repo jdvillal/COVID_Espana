@@ -5,26 +5,172 @@ date: "7/2/2021"
 output: word_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+## Estadistica descriptiva univariante
 
-## R Markdown
+Las varibles cuantitativas elegidas son:
+  CasosConfirmados: Casos de covid-19 confirmados hasta determinada fecha en 
+  en la pandemia.
+  CuidadosIntensivos: Casos de covid-19 registrados que requirieron de cuidados 
+  intencivos.
+  CasosMuerte: Casos de covid-19 registrados que terminaron en muerte del 
+  infectado.
+  Vacunados: Cantidad de personas vacunadas hasta la determinada fecha en la
+  pandemia.
+  
+Las variables cualitativas son:
+  Mes: Mes en la pandemia.
+  RigurosidadRestricciones: Nivel de rigurosidad de las autoridades sobre las 
+  restricciones impuestas durante la pademia.
+  RestriccionMobilidad: Nivel de las restricciones en la mobilidad interna del 
+  pais durante los meses de la pandemia.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+###Medidas estadisticas y graficos para variables cuantitativas
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
+####Casos Confirmados
 ```{r cars}
-summary(cars)
+mean(na.omit(datosCOVID$Vacunados))
+var(na.omit(datosCOVID$Vacunados))
+sd(na.omit(datosCOVID$Vacunados))
+
+quantile(na.omit(datosCOVID$Vacunados),0.25)
+quantile(na.omit(datosCOVID$Vacunados),0.5)
+quantile(na.omit(datosCOVID$Vacunados),0.75)
+skewness(na.omit(datosCOVID$Vacunados))
+kurtosis(na.omit(datosCOVID$Vacunados))
+
+tb=fdt(datosCOVID$Vacunados, breaks="Sturges")
+
+boxplot(na.omit(datosCOVID$Vacunados), horizontal  = TRUE)
+plot(datosCOVID$fecha, datosCOVID$Vacunados, Type = "1",
+     main = "Grafico de lineas - Vacunados", xlab = "Fecha", ylab = "# vacunados")
 ```
 
-## Including Plots
+####Casos Cuidados intensivos
+```{r cars}
+mean(na.omit(datosCOVID$CasosCuidadosIntensivos))
+var(na.omit(datosCOVID$CasosCuidadosIntensivos))
+sd(na.omit(datosCOVID$CasosCuidadosIntensivos))
 
-You can also embed plots, for example:
+quantile(na.omit(datosCOVID$CasosCuidadosIntensivos),0.25)
+quantile(na.omit(datosCOVID$CasosCuidadosIntensivos),0.5)
+quantile(na.omit(datosCOVID$CasosCuidadosIntensivos),0.75)
+skewness(na.omit(datosCOVID$CasosCuidadosIntensivos))
+kurtosis(na.omit(datosCOVID$CasosCuidadosIntensivos))
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+tb=fdt(datosCOVID$CasosCuidadosIntensivos, breaks="Sturges")
+tb
+
+boxplot(na.omit(datosCOVID$CasosCuidadosIntensivos), horizontal  = TRUE)
+plot(datosCOVID$fecha, datosCOVID$CasosCuidadosIntensivos, Type = "1",
+     main = "Grafico de lineas - Recuperados", xlab = "Fecha", ylab = "Casos recuperados")
 ```
+
+####Casos Muerte
+```{r cars}
+mean(na.omit(datosCOVID$CasosMuerte))
+var(na.omit(datosCOVID$CasosMuerte))
+sd(na.omit(datosCOVID$CasosMuerte))
+
+quantile(na.omit(datosCOVID$CasosMuerte),0.25)
+quantile(na.omit(datosCOVID$CasosMuerte),0.5)
+quantile(na.omit(datosCOVID$CasosMuerte),0.75)
+skewness(na.omit(datosCOVID$CasosMuerte))
+kurtosis(na.omit(datosCOVID$CasosMuerte))
+
+tb=fdt(datosCOVID$CasosMuerte, breaks="Sturges")
+tb
+
+boxplot(na.omit(datosCOVID$CasosMuerte), horizontal  = TRUE)
+plot(datosCOVID$Date, datosCOVID$CasosMuerte, Type = "1",
+     main = "Grafico de lineas - Muertes", xlab = "Fecha", ylab = "# muertes")
+```
+
+####Vacunados
+```{r cars}
+mean(na.omit(datosCOVID$Vacunados))
+var(na.omit(datosCOVID$Vacunados))
+sd(na.omit(datosCOVID$Vacunados))
+
+quantile(na.omit(datosCOVID$Vacunados),0.25)
+quantile(na.omit(datosCOVID$Vacunados),0.5)
+quantile(na.omit(datosCOVID$Vacunados),0.75)
+skewness(na.omit(datosCOVID$Vacunados))
+kurtosis(na.omit(datosCOVID$Vacunados))
+
+tb=fdt(datosCOVID$Vacunados, breaks="Sturges")
+tb
+
+boxplot(na.omit(datosCOVID$Vacunados), horizontal  = TRUE)
+plot(datosCOVID$fecha, datosCOVID$Vacunados, Type = "1",
+     main = "Grafico de lineas - Vacunados", xlab = "Fecha", ylab = "# vacunados")
+```
+
+###Graficos para variables cualitativas
+
+####Mes
+```{r cars}
+barplot(table(datosCOVID$Mes), main = "Grafico de barras- Mes")
+pie(table(datosCOVID$Mes))
+```
+
+####Rigurosidad Restricciones
+```{r cars}
+barplot(table(datosCOVID$RigurosidadRestricciones), main = "Grafico de barras- Nivel de rigurosidad de las Restriccioned")
+pie(table(datosCOVID$RigurosidadRestricciones))
+```
+
+####RestriccionMobilidad
+```{r cars}
+barplot(table(datosCOVID$RestriccionMobilidad), main = "Grafico de barras- Nivel de restriccion de mobilidad")
+pie(table(datosCOVID$RestriccionMobilidad))
+```
+
+
+##Estadistica descriptiva multivariante
+
+###Diagrama de caja de variables cuantitativas segmentados por variable cualitativa
+
+####CasosConfirmados - Mes
+```{r cars}
+boxplot(datosCOVID$confirmed~datosCOVID$Mes)
+```
+
+####CasosMuerte - Mes
+```{r cars}
+boxplot(datosCOVID$CasosMuerte~datosCOVID$Mes)
+```
+
+####Vacunados - Mes
+```{r cars}
+boxplot(datosCOVID$Vacunados~datosCOVID$Mes)
+```
+
+####CasosCuidadosIntensivos - Mes
+```{r cars}
+boxplot(datosCOVID$CasosCuidadosIntensivos~datosCOVID$Mes)
+```
+
+###Para las variables cuantitativas
+
+####Matriz (4x4) de correlación y matriz (4x4) de covarianzas
+```{r cars}
+cor(na.omit(datosCOVID[,c(3,4,5,6)]))
+cov(na.omit(datosCOVID[,c(3,4,5,6)]))
+```
+
+####Matriz (4x4) gráfica de correlación
+```{r cars}
+data=cor(na.omit(datosCOVID[,c(3,4,5,6)]))
+corrplot.mixed(data,lower = "circle",upper = "number")
+```
+
+####Matriz (4x4) gráfica de correlación
+```{r cars}
+plot(na.omit(datosCOVID[,(c(3,4,5,6))]))
+```
+
+
+
+
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
